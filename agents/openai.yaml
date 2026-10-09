@@ -1,0 +1,4 @@
+interface:
+  display_name: Presentation design
+  short_description: Build and verify business presentations — layouts, typography, facts registry, consistency check, HTML and PPTX
+  default_prompt: Use $presentation-design to lay out this presentation.

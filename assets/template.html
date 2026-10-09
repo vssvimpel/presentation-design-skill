@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{Название отчёта}</title>
+<style>
+:root{--bg:#F5F4F0;--card:#FFFFFF;--ink:#141413;--muted:rgba(0,0,0,0.5);--line:rgba(0,0,0,0.08);--accent:#C87A5C;--ok:#29AD49;--bad:#D4183D;--warn:#D97706;--lav:#E9E5FF;--pill:#E8D4C3;--dom:#4A3A78}
+*{box-sizing:border-box}
+html{scroll-snap-type:y proximity}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+/* Слайд 16:9; 1em = 1/64 ширины слайда, поэтому всё масштабируется вместе */
+.slide{position:relative;width:min(100vw,177.78vh);aspect-ratio:16/9;margin:0 auto 1.5vh;padding:4% 5% 5%;
+  background:var(--card);overflow:hidden;scroll-snap-align:center;display:flex;flex-direction:column;gap:.9em;
+  font-size:calc(min(100vw,177.78vh)/64);line-height:1.35}
+.slide h1{font-size:2.6em;line-height:1.1;margin:0}
+.slide h2{font-size:1.9em;line-height:1.15;margin:0}
+.kicker{font-size:.8em;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:1.25em;color:var(--ink)}
+.muted{color:var(--muted)}
+ul{margin:0;padding-left:1.1em}li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.85em}
+th,td{padding:.35em .6em;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:.8em}
+.kpi{border:1px solid var(--line);border-radius:.7em;padding:.7em .9em}
+.kpi b{display:block;font-size:1.9em;line-height:1.1}
+.kpi span{font-size:.8em;color:var(--muted)}
+.up{color:var(--ok)}.down{color:var(--bad)}
+.badge{display:inline-block;font-size:.7em;padding:.1em .6em;border-radius:1em;border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+.badge.high{color:var(--ok);border-color:var(--ok)}.badge.low{color:var(--bad);border-color:var(--bad)}.badge.medium{color:var(--warn);border-color:var(--warn)}
+.note{font-size:.8em;color:var(--muted);border-left:.25em solid var(--line);padding-left:.8em}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.4em}
+.meta{margin-top:auto;display:flex;justify-content:space-between;font-size:.7em;color:var(--muted)}
+.agenda{list-style:none;padding:0;columns:2;gap:2em}.agenda a{color:var(--ink);text-decoration:none}
+/* режим отладки: открой файл с ?debug, переполненные слайды получат красную рамку */
+.slide.overflow{outline:.25em solid var(--bad)}
+@media print{html{scroll-snap-type:none}body{background:#FFFFFF}.slide{width:1280px;margin:0;page-break-after:always;font-size:20px}@page{size:1280px 720px;margin:0}}
+</style>
+</head>
+<body>
+<!-- SLIDES START -->
+<section class="slide" id="s1" data-title="{Заголовок-вывод отчёта}" data-role="title">
+  <div class="kicker">{Продукт} · {период}</div>
+  <h1>{Заголовок-вывод отчёта}</h1>
+  <p class="lead">{Одна фраза: что решали и к чему пришли}</p>
+  <footer class="meta"><span>{Название отчёта}</span><span><span data-slide-num></span> / <span data-total-slides>2</span></span></footer>
+</section>
+<section class="slide" id="s2" data-title="{Главный вывод одним предложением}" data-role="summary" data-period="{ГГГГ-ММ}">
+  <h2>{Главный вывод одним предложением}</h2>
+  <div class="kpis">
+    <div class="kpi"><b><span data-fact="F1">{значение}</span></b><span>{название метрики}</span></div>
+  </div>
+  <ul><li>{вывод 1}</li></ul>
+  <footer class="meta"><span>{Название отчёта}</span><span><span data-slide-num></span> / <span data-total-slides>2</span></span></footer>
+</section>
+<!-- SLIDES END -->
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  slides.forEach(function(s,i){[].forEach.call(s.querySelectorAll('[data-slide-num]'),function(e){e.textContent=i+1})});
+  function cur(){var y=window.innerHeight/2,b=0,d=1e9;slides.forEach(function(s,i){var r=s.getBoundingClientRect(),c=Math.abs((r.top+r.bottom)/2-y);if(c<d){d=c;b=i}});return b}
+  document.addEventListener('keydown',function(e){
+    var k=e.key,i=cur();
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||k===' '){i=Math.min(i+1,slides.length-1)}
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){i=Math.max(i-1,0)}
+    else return;
+    e.preventDefault();slides[i].scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  if(/[?&]debug/.test(location.search)){
+    window.__overflow=[];
+    slides.forEach(function(s,i){if(s.scrollHeight>s.clientHeight+2||s.scrollWidth>s.clientWidth+2){s.classList.add('overflow');window.__overflow.push(i+1)}});
+    console.log('Слайды с переполнением:',window.__overflow.join(', ')||'нет');
+  }
+})();
+</script>
+</body>
+</html>

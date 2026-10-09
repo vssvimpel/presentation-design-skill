@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "decimal": ",",
+    "report": "ОСАГО, сентябрь 2026 (пример, данные вымышлены)"
+  },
+  "facts": {
+    "cost_search": {
+      "label": "Расход, поиск",
+      "value": 1200000,
+      "unit": "₽",
+      "period": "2026-09"
+    },
+    "pay_search": {
+      "label": "Оплаты, поиск",
+      "value": 1500,
+      "period": "2026-09"
+    },
+    "cpa_search": {
+      "label": "CPA, поиск",
+      "derive": "cost_search / pay_search",
+      "unit": "₽",
+      "period": "2026-09",
+      "key": true
+    },
+    "cost_partner": {
+      "label": "Расход, партнёры",
+      "value": 900000,
+      "unit": "₽",
+      "period": "2026-09"
+    },
+    "pay_partner": {
+      "label": "Оплаты, партнёры",
+      "value": 900,
+      "period": "2026-09"
+    },
+    "cpa_partner": {
+      "label": "CPA, партнёры",
+      "derive": "cost_partner / pay_partner",
+      "unit": "₽",
+      "period": "2026-09",
+      "key": true
+    },
+    "cpa_gap_pct": {
+      "label": "На сколько CPA партнёров выше CPA поиска",
+      "derive": "(cpa_partner - cpa_search) / cpa_search * 100",
+      "unit": "%",
+      "period": "2026-09",
+      "key": true
+    },
+    "premium_search": {
+      "label": "Премия, поиск",
+      "value": 12000000,
+      "unit": "млн ₽",
+      "scale": 1000000,
+      "decimals": 1,
+      "period": "2026-09"
+    },
+    "drr_search": {
+      "label": "ДРР, поиск",
+      "derive": "cost_search / premium_search * 100",
+      "unit": "%",
+      "decimals": 1,
+      "period": "2026-09"
+    },
+    "premium_partner": {
+      "label": "Премия, партнёры",
+      "value": 6840000,
+      "unit": "млн ₽",
+      "scale": 1000000,
+      "decimals": 1,
+      "period": "2026-09"
+    },
+    "drr_partner": {
+      "label": "ДРР, партнёры",
+      "derive": "cost_partner / premium_partner * 100",
+      "unit": "%",
+      "decimals": 1,
+      "period": "2026-09"
+    },
+    "cpa_search_yoy_pct": {
+      "label": "Изменение CPA поиска к сентябрю 2025",
+      "value": -6.4,
+      "unit": "%",
+      "decimals": 1,
+      "period": "2026-09"
+    },
+    "cost_total": {
+      "label": "Расходы всего",
+      "derive": "cost_search + cost_partner",
+      "unit": "₽",
+      "period": "2026-09",
+      "key": true
+    },
+    "budget_shift_pct": {
+      "label": "Доля бюджета партнёров к переносу (план)",
+      "value": 15,
+      "unit": "%",
+      "period": "2026-09",
+      "key": true
+    }
+  }
+}

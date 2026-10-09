@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ОСАГО, сентябрь 2026: поиск дешевле партнёров (пример)</title>
+<style>
+:root{--bg:#F5F4F0;--card:#FFFFFF;--ink:#141413;--muted:rgba(0,0,0,0.5);--line:rgba(0,0,0,0.08);--accent:#C87A5C;--ok:#29AD49;--bad:#D4183D;--warn:#D97706;--lav:#E9E5FF;--pill:#E8D4C3;--dom:#4A3A78}
+*{box-sizing:border-box}
+html{scroll-snap-type:y proximity}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+/* Слайд 16:9; 1em = 1/64 ширины слайда, поэтому всё масштабируется вместе */
+.slide{position:relative;width:min(100vw,177.78vh);aspect-ratio:16/9;margin:0 auto 1.5vh;padding:4% 5% 5%;
+  background:var(--card);overflow:hidden;scroll-snap-align:center;display:flex;flex-direction:column;gap:.9em;
+  font-size:calc(min(100vw,177.78vh)/64);line-height:1.35}
+.slide h1{font-size:2.6em;line-height:1.1;margin:0}
+.slide h2{font-size:1.9em;line-height:1.15;margin:0}
+.kicker{font-size:.8em;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:1.25em;color:var(--ink)}
+.muted{color:var(--muted)}
+ul{margin:0;padding-left:1.1em}li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.85em}
+th,td{padding:.35em .6em;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:.8em}
+.kpi{border:1px solid var(--line);border-radius:.7em;padding:.7em .9em}
+.kpi b{display:block;font-size:1.9em;line-height:1.1}
+.kpi span{font-size:.8em;color:var(--muted)}
+.up{color:var(--ok)}.down{color:var(--bad)}
+.badge{display:inline-block;font-size:.7em;padding:.1em .6em;border-radius:1em;border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+.badge.high{color:var(--ok);border-color:var(--ok)}.badge.low{color:var(--bad);border-color:var(--bad)}.badge.medium{color:var(--warn);border-color:var(--warn)}
+.note{font-size:.8em;color:var(--muted);border-left:.25em solid var(--line);padding-left:.8em}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.4em}
+.meta{margin-top:auto;display:flex;justify-content:space-between;font-size:.7em;color:var(--muted)}
+.agenda{list-style:none;padding:0;columns:2;gap:2em}.agenda a{color:var(--ink);text-decoration:none}
+/* режим отладки: открой файл с ?debug, переполненные слайды получат красную рамку */
+.slide.overflow{outline:.25em solid var(--bad)}
+@media print{html{scroll-snap-type:none}body{background:#FFFFFF}.slide{width:1280px;margin:0;page-break-after:always;font-size:20px}@page{size:1280px 720px;margin:0}}
+</style>
+</head>
+<body>
+<!-- SLIDES START -->
+<section class="slide" id="s1" data-title="ОСАГО, сентябрь 2026: поиск дешевле партнёров" data-role="title">
+  <div class="kicker">ОСАГО · сентябрь 2026 · ПРИМЕР, данные вымышлены</div>
+  <h1>ОСАГО, сентябрь 2026: поиск дешевле партнёров</h1>
+  <p class="lead">Решаем, как перераспределить бюджет между поиском и партнёрами.</p>
+  <ol class="agenda" data-agenda>
+    <li><a href="#s2">Главный вывод</a></li>
+    <li><a href="#s3">Данные и допущения</a></li>
+    <li><a href="#s4">Стоимость оплаченного полиса по каналам</a></li>
+    <li><a href="#s5">Доля расходов в премии</a></li>
+    <li><a href="#s6">Рекомендации</a></li>
+    <li><a href="#s7">Что проверить дальше</a></li>
+  </ol>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s2" data-title="Главный вывод" data-role="summary" data-period="2026-09">
+  <h2>Главный вывод</h2>
+  <p class="lead">Оплаченный полис из поиска стоит меньше, чем у партнёров; часть бюджета выгодно перенести в поиск.</p>
+  <div class="kpis">
+    <div class="kpi"><b data-fact="cpa_search">800&nbsp;₽</b><span>CPA, поиск</span></div>
+    <div class="kpi"><b data-fact="cpa_partner">1&nbsp;000&nbsp;₽</b><span>CPA, партнёры</span></div>
+    <div class="kpi"><b data-fact="cpa_gap_pct">25%</b><span>партнёры дороже поиска</span></div>
+    <div class="kpi"><b data-fact="cost_total">2&nbsp;100&nbsp;000&nbsp;₽</b><span>расходы всего</span></div>
+  </div>
+  <ul>
+    <li>CPA в партнёрах превышает CPA в поиске на <span data-fact="cpa_gap_pct">25%</span> (<a href="#s4">слайд 4</a>).</li>
+    <li>Предлагаем перенести <span data-fact="budget_shift_pct">15%</span> бюджета партнёров в поиск (<a href="#s6">слайд 6</a>).</li>
+  </ul>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s3" data-title="Данные и допущения" data-role="method">
+  <h2>Данные и допущения</h2>
+  <ul>
+    <li>Источники: Метрика, CRM, рекламные кабинеты; период сентябрь 2026.</li>
+    <li>Атрибуция: последний значимый клик.</li>
+    <li>Данные партнёров за последние дни неполные, выводы предварительные.</li>
+  </ul>
+  <p class="note">Допущения и ограничения влияют на уверенность выводов на слайдах 4 и 5.</p>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s4" data-title="Стоимость оплаченного полиса по каналам" data-role="finding" data-period="2026-09">
+  <h2>Стоимость оплаченного полиса по каналам</h2>
+  <table>
+    <tr><th>Канал</th><th>Расход</th><th>Оплат</th><th>CPA</th></tr>
+    <tr><td>Поиск</td><td data-fact="cost_search">1&nbsp;200&nbsp;000&nbsp;₽</td><td data-fact="pay_search">1&nbsp;500</td><td data-fact="cpa_search">800&nbsp;₽</td></tr>
+    <tr><td>Партнёры</td><td data-fact="cost_partner">900&nbsp;000&nbsp;₽</td><td data-fact="pay_partner">900</td><td data-fact="cpa_partner">1&nbsp;000&nbsp;₽</td></tr>
+  </table>
+  <p class="muted">Расходы по двум каналам вместе: <span data-fact="cost_total">2&nbsp;100&nbsp;000&nbsp;₽</span>.</p>
+  <p>Разница между партнёрами и поиском: <span data-fact="cpa_gap_pct">25%</span> по CPA. <span class="badge high">уверенность: высокая</span></p>
+  <p data-trend="cpa_search_yoy_pct">CPA поиска снизился к сентябрю прошлого года на <span data-fact="cpa_search_yoy_pct">−6,4%</span>.</p>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s5" data-title="Доля расходов в премии" data-role="finding" data-period="2026-09">
+  <h2>Доля расходов в премии</h2>
+  <table>
+    <tr><th>Канал</th><th>Премия</th><th>ДРР</th></tr>
+    <tr><td>Поиск</td><td data-fact="premium_search">12,0&nbsp;млн ₽</td><td data-fact="drr_search">10,0%</td></tr>
+    <tr><td>Партнёры</td><td data-fact="premium_partner">6,8&nbsp;млн ₽</td><td data-fact="drr_partner">13,2%</td></tr>
+  </table>
+  <p class="note">Убыточность по каналам придёт с задержкой, поэтому оценка по качеству клиентов предварительная.</p>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s6" data-title="Рекомендации" data-role="recommendation">
+  <h2>Рекомендации</h2>
+  <ol>
+    <li>Перенести <span data-fact="budget_shift_pct">15%</span> бюджета партнёров в поиск (основание: <a href="#s4">слайд 4</a>). <span class="badge medium">уверенность: средняя</span></li>
+    <li>Пересмотреть условия по партнёрам с высоким ДРР (основание: <a href="#s5">слайд 5</a>). <span class="badge medium">уверенность: средняя</span></li>
+  </ol>
+  <p class="note">Тексты рекламы по страхованию требуют согласования с юристами и комплаенсом.</p>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<section class="slide" id="s7" data-title="Что проверить дальше" data-role="next">
+  <h2>Что проверить дальше</h2>
+  <ul>
+    <li>Запросить убыточность по каналам после закрытия периода.</li>
+    <li>Сверить число оплат партнёров с данными CRM.</li>
+  </ul>
+  <footer class="meta"><span>ОСАГО · сентябрь 2026 · пример</span><span><span data-slide-num></span> / <span data-total-slides>7</span></span></footer>
+</section>
+<!-- SLIDES END -->
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  slides.forEach(function(s,i){[].forEach.call(s.querySelectorAll('[data-slide-num]'),function(e){e.textContent=i+1})});
+  function cur(){var y=window.innerHeight/2,b=0,d=1e9;slides.forEach(function(s,i){var r=s.getBoundingClientRect(),c=Math.abs((r.top+r.bottom)/2-y);if(c<d){d=c;b=i}});return b}
+  document.addEventListener('keydown',function(e){
+    var k=e.key,i=cur();
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||k===' '){i=Math.min(i+1,slides.length-1)}
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){i=Math.max(i-1,0)}
+    else return;
+    e.preventDefault();slides[i].scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  if(/[?&]debug/.test(location.search)){
+    window.__overflow=[];
+    slides.forEach(function(s,i){if(s.scrollHeight>s.clientHeight+2||s.scrollWidth>s.clientWidth+2){s.classList.add('overflow');window.__overflow.push(i+1)}});
+    console.log('Слайды с переполнением:',window.__overflow.join(', ')||'нет');
+  }
+})();
+</script>
+</body>
+</html>
